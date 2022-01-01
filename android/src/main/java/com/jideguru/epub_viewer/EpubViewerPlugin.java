@@ -136,7 +136,9 @@ public class EpubViewerPlugin implements MethodCallHandler, FlutterPlugin, Activ
       reader = new Reader(context,messenger,config, sink);
       reader.open(bookPath, lastLocation);
 
-    }else if(call.method.equals("close")){
+    } else if(call.method.equals("getCount")) {
+      result.success(reader.getACfi());
+    } else if(call.method.equals("close")){
       reader.close();
     }
     else if (call.method.equals("setChannel")){

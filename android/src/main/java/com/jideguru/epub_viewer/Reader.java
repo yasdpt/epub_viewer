@@ -168,6 +168,10 @@ public class Reader implements OnHighlightListener, ReadLocatorListener, FolioRe
         return null;
     }
 
+    public String getACfi() {
+        return read_locator.getLocations().getCfi();
+    }
+
     @Override
     public void onFolioReaderClosed() {
         Log.i("readLocator", "-> saveReadLocator -> " + read_locator.toJson());
