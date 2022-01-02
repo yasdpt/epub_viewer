@@ -43,7 +43,8 @@ class EpubViewer {
   static void open(String bookPath, {EpubLocator? lastLocation}) async {
     Map<String, dynamic> agrs = {
       "bookPath": bookPath,
-      'lastLocation': lastLocation == null ? '' : jsonEncode(lastLocation.toJson()),
+      'lastLocation':
+          lastLocation == null ? '' : jsonEncode(lastLocation.toJson()),
     };
     await _channel.invokeMethod('open', agrs);
   }
@@ -54,13 +55,18 @@ class EpubViewer {
     if (extension(bookPath) == '.epub') {
       Map<String, dynamic> agrs = {
         "bookPath": (await Util.getFileFromAsset(bookPath)).path,
-        'lastLocation': lastLocation == null ? '' : jsonEncode(lastLocation.toJson()),
+        'lastLocation':
+            lastLocation == null ? '' : jsonEncode(lastLocation.toJson()),
       };
       _channel.invokeMethod('setChannel');
       await _channel.invokeMethod('open', agrs);
     } else {
       throw ('${extension(bookPath)} cannot be opened, use an EPUB File');
     }
+  }
+
+  static Future getEFS() async {
+    return await _channel.invokeMethod("getCount");
   }
 
   static Future setChannel() async {
@@ -70,7 +76,8 @@ class EpubViewer {
   /// Stream to get EpubLocator for android and pageNumber for iOS
   static Stream get locatorStream {
     print("In stream");
-    Stream pageStream = _pageChannel.receiveBroadcastStream().map((value) => value);
+    Stream pageStream =
+        _pageChannel.receiveBroadcastStream().map((value) => value);
 
     return pageStream;
   }

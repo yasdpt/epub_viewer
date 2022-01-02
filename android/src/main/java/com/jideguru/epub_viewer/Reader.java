@@ -169,7 +169,7 @@ public class Reader implements OnHighlightListener, ReadLocatorListener, FolioRe
     }
 
     public String getACfi() {
-        return read_locator.getLocations().getCfi();
+        return read_locator.getLocations().getXpath();
     }
 
     @Override

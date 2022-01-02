@@ -35,6 +35,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<String> getEFS() async {
+    return await EpubViewer.getEFS();
+  }
+
+  EpubLocator? lastLocation;
+
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -73,22 +81,26 @@ class _MyAppState extends State<MyApp> {
 //                      }),
 //                    );
 
-                    await EpubViewer.openAsset(
-                      'assets/4.epub',
-                      lastLocation: EpubLocator.fromJson({
+                    if (lastLocation == null) {
+                      lastLocation = EpubLocator.fromJson({
                         "bookId": "2239",
                         "href": "/OEBPS/ch06.xhtml",
                         "created": 1539934158390,
                         "locations": {
                           "cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"
                         }
-                      }),
+                      });
+                    }
+
+                    EpubViewer.locatorStream.listen((locator) {
+                      lastLocation = EpubLocator.fromJson(jsonDecode(locator));
+                    });
+
+                    await EpubViewer.openAsset(
+                      'assets/4.epub',
+                      lastLocation: lastLocation,
                     );
                     // get current locator
-                    EpubViewer.locatorStream.listen((locator) {
-                      print(
-                          'LOCATOR: ${EpubLocator.fromJson(jsonDecode(locator))}');
-                    });
                   },
                   child: Container(
                     child: Text('open epub'),
