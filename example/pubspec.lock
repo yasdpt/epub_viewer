@@ -58,11 +58,13 @@ packages:
     source: hosted
     version: "4.0.0"
   epub_viewer:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: e7ce2460a3635a3869809149ef3f394721504e55
+      url: "https://github.com/yasdpt/epub_viewer.git"
+    source: git
     version: "0.2.4"
   fake_async:
     dependency: transitive
